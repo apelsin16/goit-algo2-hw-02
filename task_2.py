@@ -2,7 +2,6 @@ from typing import List, Dict
 
 
 def rod_cutting_memo(length: int, prices: List[int]) -> Dict:
-    from functools import lru_cache
     """
     Знаходить оптимальний спосіб розрізання через мемоізацію
 
@@ -17,11 +16,15 @@ def rod_cutting_memo(length: int, prices: List[int]) -> Dict:
 
 
     cuts_result = {}
+    memo = {}
 
-    @lru_cache(maxsize=None)
     def dp(n):
         if n == 0:
             return 0
+
+        if n in memo:
+            return memo[n]
+
         max_profit = float("-inf")
         best_cut = 0
         for i in range(1, n + 1):
